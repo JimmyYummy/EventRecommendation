@@ -51,6 +51,6 @@ public class GeoHash {
 
  public static void main(String[] args) {
  	// Expect to see 'u4pruydqqvj8'
- 	System.out.println(encodeGeohash(57.64911, 10.40744, 8));
+ 	System.out.println(encodeGeohash(57.64911, 10.40744, 12));
  }
 }

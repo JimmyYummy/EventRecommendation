@@ -69,6 +69,7 @@ public class EventHistory extends HttpServlet {
 				eventIds.add(jarr.get(i).toString());
 			}
 			// update the database
+			System.out.println("updating the database");
 			DBConnection conn = DBConnectionFactory.getConnection();
 			conn.setFavoriteEvents(userId, eventIds);
 			conn.close();
@@ -79,12 +80,7 @@ public class EventHistory extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		// turn the notice when the above ops failed
-		try {
-			RpcUtil.writeJSONObject(response, new JSONObject("favortite operation failed"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		RpcUtil.writeJSONObject(response, new JSONObject());
 	} 
 
 	/**
@@ -112,11 +108,6 @@ public class EventHistory extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		// turn the notice when the above ops failed
-		try {
-			RpcUtil.writeJSONObject(response, new JSONObject("unfavortite operation failed"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		RpcUtil.writeJSONObject(response, new JSONObject());
 	}
 }

@@ -2,6 +2,7 @@ package dao.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -34,7 +35,7 @@ public class MySQLDBTableCreation {
 					+ "name VARCHAR(255),"
 					+ "address VARCHAR(255),"
 					+ "image_url VARCHAR(255),"
-					+ "url VARCHAR(255),"
+					+ "event_url VARCHAR(255),"
 					+ "PRIMARY KEY (event_id))";
 			stmt.executeUpdate(sql);
 			

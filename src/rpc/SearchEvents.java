@@ -33,7 +33,6 @@ public class SearchEvents extends HttpServlet {
     public SearchEvents() {
         super();
         eventSource = new TicketMasterAPI();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -57,7 +56,6 @@ public class SearchEvents extends HttpServlet {
 				jarr.put(obj);
 			}
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		RpcUtil.writeJSONArray(response, jarr);
@@ -68,7 +66,6 @@ public class SearchEvents extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -72,10 +72,12 @@ public class TicketMasterAPI implements EventSourceAPI {
 			try {
 				JSONObject obj = jArr.getJSONObject(i);
 				Event.Builder builder = new Event.Builder();
-				builder.setEventId(obj.getString("id"));
-				builder.setName(obj.getString("name"));
-				builder.setEventUrl(obj.getString("url"));
-				builder.setDistance(obj.getDouble("distance"));
+				builder.setEventId(obj.getString("id"))
+						.setName(obj.getString("name"))
+						.setEventUrl(obj.getString("url"));
+				if (!obj.isNull("distance")) {
+					builder.setDistance(obj.getDouble("distance"));
+				}				
 				builder.setAddress(getAddr(obj));
 				builder.setImgUrl(getImgUrl(obj));
 				builder.setCategories(getCategories(obj));
@@ -112,7 +114,7 @@ public class TicketMasterAPI implements EventSourceAPI {
 			JSONArray images = obj.getJSONArray("images");
 			for (int i = 0; i < images.length(); i++) {
 				JSONObject img = images.getJSONObject(i);
-				if (img.isNull("url")) return img.getString("url");
+				if (! img.isNull("url")) return img.getString("url");
 			}
 		}
 		return "";
