@@ -75,6 +75,7 @@ public class TicketMasterAPI implements EventSourceAPI {
 				builder.setEventId(obj.getString("id"));
 				builder.setName(obj.getString("name"));
 				builder.setEventUrl(obj.getString("url"));
+				builder.setDistance(obj.getDouble("distance"));
 				builder.setAddress(getAddr(obj));
 				builder.setImgUrl(getImgUrl(obj));
 				builder.setCategories(getCategories(obj));

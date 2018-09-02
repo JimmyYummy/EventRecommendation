@@ -13,7 +13,7 @@ public class Event {
 	private String eventUrl;
 	private double distance;
 	private Set<String> categories;
-	
+
 	private Event(Builder builder) {
 		this.eventId = builder.eventId;
 		this.name = builder.name;
@@ -60,7 +60,7 @@ public class Event {
 		if (this.eventId == null) return event.eventId == null;
 		return this.eventId.equals(event.eventId);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,24 +68,21 @@ public class Event {
 		result = prime * result + ((this.eventId == null) ? 0 : this.eventId.hashCode());
 		return result;
 	}
-	
-	public JSONObject toJSONObject() {
+
+	public JSONObject toJSONObject() throws JSONException {
 		JSONObject obj = new JSONObject();
-		try {
-			obj.put("eventId", this.eventId);
-			obj.put("name", this.name);
-			obj.put("address", this.address);
-			obj.put("imgUrl", this.imgUrl);
-			obj.put("eventUrl", this.eventUrl);
-			obj.put("distance", this.distance);
-			obj.put("categories", this.categories);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		obj.put("eventId", this.eventId);
+		obj.put("name", this.name);
+		obj.put("address", this.address);
+		obj.put("imgUrl", this.imgUrl);
+		obj.put("eventUrl", this.eventUrl);
+		obj.put("distance", this.distance);
+		obj.put("categories", this.categories);
+
 		return obj;
 	}
-	
+
 	// builder pattern
 	public static class Builder {
 		private String eventId;
@@ -95,7 +92,7 @@ public class Event {
 		private String eventUrl;
 		private double distance;
 		private Set<String> categories;
-		
+
 		public Builder setEventId(String eventId) {
 			this.eventId = eventId;
 			return this;
