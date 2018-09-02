@@ -1,5 +1,7 @@
 package dao;
 
+import dao.mysql.MySQLConnection;
+
 public class DBConnectionFactory {
 	private static final String DEAFULT_DB = "mysql";
 	
@@ -10,7 +12,7 @@ public class DBConnectionFactory {
 	public static DBConnection getConnection(String db) {
 		switch(db) {
 		case "mysql":
-			return null;
+			return new MySQLConnection();
 		default:
 			throw new IllegalArgumentException("Invild DB: " + db);
 		}

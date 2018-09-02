@@ -21,7 +21,7 @@ import external.EventSourceAPI;
 import external.TicketMaster.TicketMasterAPI;
 
 /**
- * Servlet implementation class SearchItem
+ * Servlet implementation class SearchEvents
  */
 @WebServlet("/search")
 public class SearchEvents extends HttpServlet {
