@@ -88,6 +88,7 @@ public class EventHistory extends HttpServlet {
 	 */
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		try {
 			// get the userId and favorite eventIds
 			JSONObject obj = RpcUtil.readJSONObject(request);

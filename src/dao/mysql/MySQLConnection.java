@@ -175,6 +175,43 @@ public class MySQLConnection implements DBConnection {
 		}
 		return categories;
 	}
+
+	@Override
+	public boolean verifyLogin(String userId, String password) {
+		try {
+			if (conn == null || conn.isClosed()) {
+				System.err.println("MySql connection status is" + conn);
+				throw new SQLException("No existing connection for getFavoriteEventIds");
+			}
+			String sql = String.format("SELECT * FROM users WHERE user_id = '%s' AND password = '%s'", userId, password);
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(sql);
+			return result.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public String getFullName(String userId) {
+		String fullname = "";
+		try {
+			if (conn == null || conn.isClosed()) {
+				System.err.println("MySql connection status is" + conn);
+				throw new SQLException("No existing connection for getFavoriteEventIds");
+			}
+			String sql = String.format("SELECT first_name, last_name FROM users WHERE user_id = '%s'", userId);
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(sql);
+			if (result.next()) {
+				fullname = String.format("%s %s", result.getString(1), result.getString(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fullname;
+	}
 	
 
 }

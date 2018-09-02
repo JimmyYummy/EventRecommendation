@@ -6,7 +6,7 @@ import java.util.Set;
 import entity.Event;
 
 public interface DBConnection extends AutoCloseable{
-	
+
 	//				STRUCTURE OF THE DATABSE:
 	//						 database
 	//				/		/		\		\
@@ -37,18 +37,23 @@ public interface DBConnection extends AutoCloseable{
 	//		user_id		password	first_name	last_name
 	//			|
 	//	  primary key
-	
+
 	public void close();
-	
+
 	public void setFavoriteEvents(String userId, List<String> eventIds);
-	
+
 	public void unsetFavoriteEvents(String userId, List<String> eventIds);
-	
+
 	public Set<String> getFavoriteEventIds(String userId);
-	
+
 	public Set<Event> getFavoriteEvents(String userId);
 
 	public void saveEvents(List<Event> events);
-	
+
 	public Set<String> getCategoriesFromDB(String eventId);
+
+	public boolean verifyLogin(String userId, String password);
+
+	public String getFullName(String userId);
+
 }
