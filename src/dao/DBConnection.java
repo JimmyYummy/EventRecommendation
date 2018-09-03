@@ -56,4 +56,7 @@ public interface DBConnection extends AutoCloseable{
 
 	public String getFullName(String userId);
 
+	public boolean isUserExist(String userId);
+	
+	public boolean createUser(String userId, String password);
 }

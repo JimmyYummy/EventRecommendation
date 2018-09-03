@@ -54,6 +54,7 @@ public class RpcUtil {
 			return new JSONObject(sb.toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
+			System.out.println(sb.toString());
 			e.printStackTrace();
 			return null;
 		}

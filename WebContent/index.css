@@ -1,0 +1,183 @@
+body {
+	background: #123455;
+	color: #624630;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 0.9em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60em;
+	text-align: center;
+}
+
+header {
+	display: block;
+	background-color: #faf8d1;
+	color: black;
+	height: 4.5em;
+	line-height: 4.5em;
+	margin-bottom: 0em;
+	border-width: 0em;
+	overflow: scroll;
+}
+
+header #title {
+	display: inline-block;
+	float: left;
+	font-weight: bold;
+	font-size: 2em;
+	margin-left: 1em;
+	margin-right: auto;
+}
+
+body footer {
+	color: white;
+}
+
+#user {
+	display: inline-block;
+	float: right;
+	margin-right: 2em;
+	margin-left: 2em;
+}
+
+#logout-link {
+	display: inline-block;
+	float: right;
+	margin-right: 2em;
+	margin-left: 2em;
+	text-decoration: none;
+	color: #624630;
+}
+
+#logout-link:hover {
+	color: blue;
+}
+
+#main-body {
+	background: #F2EBD9;
+	overflow: scroll;
+	min-height: 35em;
+}
+
+#login-form {
+	position: relative;
+	top: 12em;
+	margin: auto;
+}
+
+#login-form label {
+	display: inline-block;
+	width: 6em;
+}
+
+#login-error {
+	clear: both;
+	color: #990000;
+	padding-top: 10px;
+}
+
+.nav-panel {
+	float: left;
+	display: inline-block;
+	height: inherit;
+	width: 15em;
+}
+
+.main-nav-btn {
+	color: #624630;
+	display: block;
+	margin: 0 auto;
+	font-size: 1.4em;
+	height: 2em;
+	line-height: 2em;
+	text-decoration: none;
+}
+
+#nearby-btn {
+	margin-top: 2em;
+}
+
+.main-nav-btn:hover {
+	background: rgba(255, 255, 255, 0.8);
+	color: #624630;
+}
+
+.main-nav-btn.active {
+	background: rgba(255, 255, 255, 0.8);
+	color: #624630;
+}
+
+.main-nav-btn {
+	color: #624630;
+	display: block;
+	margin: 0 auto;
+	font-size: 1.4em;
+	height: 2em;
+	line-height: 2em;
+	text-decoration: none;
+}
+
+#events {
+	background: #F2EBD9;
+	color: #624630;
+	list-style: none;
+	margin-left: 15em;
+	min-height: 250px;
+	padding: 10px;
+}
+
+.event {
+	align-items: center;
+	border-bottom: 1px solid #FFFFFF;
+	display: flex;
+	margin: 10px;
+	padding: 15px;
+	transition: background-color 100ms linear;
+}
+
+.event:hover {
+	background: rgba(255, 255, 255, 0.8);
+	transition: background-color 200ms linear;
+}
+
+.event img {
+	border: 1px solid #FFFFFF;
+	height: 90px;
+	width: 120px;
+}
+
+.event>div:first-of-type {
+	flex: 1;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.event-name {
+	color: #624630;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.event-name:hover {
+	font-weight: bold;
+}
+
+.event-address {
+	line-height: 20px;
+	padding-right: 20px;
+	text-align: right;
+}
+
+.fav-link {
+	border-left: 1px solid #FFFFFF;
+	cursor: pointer;
+	line-height: 60px;
+	text-align: center;
+	width: 60px;
+}
+
+.fav-link:hover {
+	color: #F13F3F;
+}
+.fav-link

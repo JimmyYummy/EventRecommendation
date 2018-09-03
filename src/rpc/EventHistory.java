@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +39,12 @@ public class EventHistory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.setStatus(403);
+			return;
+		}
+		
 		String userId = request.getParameter("user_id");
 		JSONArray jarr = new JSONArray();
 		try (DBConnection conn = DBConnectionFactory.getConnection()) {
@@ -59,11 +66,18 @@ public class EventHistory extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.setStatus(403);
+			return;
+		}
+		
 		try {
 			// get the userId and favorite eventIds
 			JSONObject obj = RpcUtil.readJSONObject(request);
 			String userId = obj.getString("user_id");
 			JSONArray jarr = obj.getJSONArray("favorites");
+			System.out.println("received fav call from: " + userId + " on event: " + jarr);
 			List<String> eventIds = new ArrayList<>();
 			for(int i = 0; i < jarr.length(); i++) {
 				eventIds.add(jarr.get(i).toString());
@@ -88,12 +102,18 @@ public class EventHistory extends HttpServlet {
 	 */
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.setStatus(403);
+			return;
+		}
 		
 		try {
 			// get the userId and favorite eventIds
 			JSONObject obj = RpcUtil.readJSONObject(request);
 			String userId = obj.getString("user_id");
 			JSONArray jarr = obj.getJSONArray("favorites");
+			System.out.println("received fav call from: " + userId + " on event: " + jarr);
 			List<String> eventIds = new ArrayList<>();
 			for(int i = 0; i < jarr.length(); i++) {
 				eventIds.add(jarr.get(i).toString());

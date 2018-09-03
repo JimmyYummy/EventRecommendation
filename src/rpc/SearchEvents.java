@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,25 +27,32 @@ import external.TicketMaster.TicketMasterAPI;
 @WebServlet("/search")
 public class SearchEvents extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private final EventSourceAPI eventSource;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchEvents() {
-        super();
-        eventSource = new TicketMasterAPI();
-    }
+	private final EventSourceAPI eventSource;
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public SearchEvents() {
+		super();
+		eventSource = new TicketMasterAPI();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.setStatus(403);
+			return;
+		}
+		
 		// get the params for search
 		String userId = request.getParameter("user_id");
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
 		String keyword = request.getParameter("keyword");
-		
+		System.out.println("lat" + lat + " lon" + lon);
+
 		List<Event> events = eventSource.search(lat, lon, keyword);
 		JSONArray jarr = new JSONArray();
 		try (DBConnection conn = DBConnectionFactory.getConnection()) {
@@ -59,7 +67,7 @@ public class SearchEvents extends HttpServlet {
 			e1.printStackTrace();
 		}
 		RpcUtil.writeJSONArray(response, jarr);
-		
+
 	}
 
 	/**

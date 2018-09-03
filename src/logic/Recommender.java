@@ -27,7 +27,6 @@ public class Recommender {
 				favoritedCategories.put(category, favoritedCategories.getOrDefault(category, 0) + 1);
 			}
 		}
-
 		// sort the favorite categories by frequency
 		List<Entry<String, Integer>> categoryList = new ArrayList<> (favoritedCategories.entrySet());
 		Collections.sort(categoryList, new Comparator<Entry<String, Integer>>() {
@@ -43,6 +42,7 @@ public class Recommender {
 		for (Entry<String, Integer> category : categoryList) {
 			List<Event> filteredEvents = new ArrayList<>();
 			List<Event> events = source.search(lat, lon, category.getKey());
+			conn.saveEvents(events);
 			for (Event event : events) {
 				if (! favoritedEventIds.contains(event.getEventId())) {
 					filteredEvents.add(event);
@@ -57,6 +57,7 @@ public class Recommender {
 			});
 			recommendedEvents.addAll(filteredEvents);
 		}
+		conn.close();
 		return recommendedEvents;
 
 	}

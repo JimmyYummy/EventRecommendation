@@ -33,7 +33,7 @@ public class TicketMasterAPI implements EventSourceAPI {
 			e.printStackTrace();
 		}
 		String geoHash = GeoHash.encodeGeohash(lat, lon, 8);
-		String query = String.format("%s?apikey=%s&geopoint=%s&keyword=%s&radius=%d",
+		String query = String.format("%s?apikey=%s&geoPoint=%s&keyword=%s&radius=%d",
 				URL, API_KEY, geoHash, keyword, RADIUS);
 		// query the search to TicketMaster
 		try {
@@ -42,7 +42,7 @@ public class TicketMasterAPI implements EventSourceAPI {
 			conn.setRequestMethod("GET");
 			// get the request
 			int responseCode = conn.getResponseCode();
-			System.out.println("TicketMasterAPI: sent a request with query" + URL);
+			System.out.println("TicketMasterAPI: sent a request with query" + query);
 			System.out.println("Response code is " + responseCode);
 			// read the response
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -147,14 +147,14 @@ public class TicketMasterAPI implements EventSourceAPI {
 						if (!venue.isNull("city")) {
 							JSONObject city = venue.getJSONObject("city");
 							if (!city.isNull("name")) {
-								sb.append(" ");
+								sb.append(",;,");
 								sb.append(city.getString("name"));
 							}
 						}
 						if (!venue.isNull("state")) {
 							JSONObject state = venue.getJSONObject("state");
 							if (!state.isNull("name")) {
-								sb.append(" ");
+								sb.append(",;,");
 								sb.append(state.getString("name"));
 							}
 						}

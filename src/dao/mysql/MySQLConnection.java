@@ -82,7 +82,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			String sql = String.format("SELECT event_id FROM favorites WHERE user_id = %s", userId);
+			String sql = String.format("SELECT event_id FROM favorites WHERE user_id = '%s'", userId);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			while (result.next()) {
@@ -110,12 +110,12 @@ public class MySQLConnection implements DBConnection {
 				ResultSet result = stmt.executeQuery();
 				if (result.next()) {
 					Event event = builder.setEventId(result.getString("event_id"))
-									.setName(result.getString("name"))
-									.setAddress(result.getString("address"))
-									.setEventUrl(result.getString("event_url"))
-									.setImgUrl(result.getString("image_url"))
-									.setCategories(getCategoriesFromDB(eventId))
-									.build();
+							.setName(result.getString("name"))
+							.setAddress(result.getString("address"))
+							.setEventUrl(result.getString("event_url"))
+							.setImgUrl(result.getString("image_url"))
+							.setCategories(getCategoriesFromDB(eventId))
+							.build();
 					events.add(event);
 				}
 			}
@@ -134,8 +134,8 @@ public class MySQLConnection implements DBConnection {
 			}
 			PreparedStatement stmt1 = conn.prepareStatement(
 					"INSERT IGNORE INTO events "
-					+ "(event_id, name, address, event_url, image_url) "
-					+ "VALUES (?, ?, ?, ?, ?)");
+							+ "(event_id, name, address, event_url, image_url) "
+							+ "VALUES (?, ?, ?, ?, ?)");
 			PreparedStatement stmt2 = conn.prepareStatement(
 					"INSERT IGNORE INTO categories (event_id, category) VALUES (?, ?)");
 			for (Event event : events) {
@@ -145,7 +145,7 @@ public class MySQLConnection implements DBConnection {
 				stmt1.setString(4, event.getEventUrl());
 				stmt1.setString(5, event.getImgUrl());
 				stmt1.executeUpdate();
-				
+
 				stmt2.setString(1, event.getEventId());
 				for (String category : event.getCategories()) {
 					stmt2.setString(2, category);
@@ -212,6 +212,39 @@ public class MySQLConnection implements DBConnection {
 		}
 		return fullname;
 	}
-	
+
+	@Override
+	public boolean isUserExist(String userId) {
+		try {
+			if (conn == null || conn.isClosed()) {
+				System.err.println("MySql connection status is" + conn);
+				throw new SQLException("No existing connection for isUserExist");
+			}
+			String sql = String.format("SELECT user_id FROM users WHERE user_id = '%s'", userId);
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery(sql);
+			return result.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean createUser(String userId, String password) {
+		try {
+			if (conn == null || conn.isClosed()) {
+				System.err.println("MySql connection status is" + conn);
+				throw new SQLException("No existing connection for createUser");
+			}
+			String sql = String.format("INSERT IGNORE INTO users VALUES('%s', '%s', 'new-user', 'new-user')", userId, password);
+			Statement stmt = conn.createStatement();
+			return stmt.executeUpdate(sql) == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 
 }
