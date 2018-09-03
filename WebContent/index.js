@@ -138,7 +138,7 @@
 
 	function getPosByIP(callback) {
 		console.log("getting position by ip")
-		ajax("http://ipinfo.io.json", null, "get", function(res) {
+		ajax("http://ipinfo.io/json", null, "get", function(res) {
 			var json = JSON.parse(res);
 			if ("loc" in json) {
 				var loc = json["loc"].split(',');
