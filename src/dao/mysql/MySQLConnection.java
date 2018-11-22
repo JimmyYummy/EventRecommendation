@@ -44,7 +44,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for setFavoriteEvents");
 			}
-			String sql = String.format("INSERT IGNORE INTO favorites (user_id, event_id) VALUES (%s, ?)", userId);
+			String sql = String.format("INSERT IGNORE INTO favorites (user_id, event_id) VALUES (\"%s\", ?)", userId);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			for(String eventId : eventIds) {
 				stmt.setString(1, eventId);
