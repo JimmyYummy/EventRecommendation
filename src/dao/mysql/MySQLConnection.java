@@ -44,7 +44,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for setFavoriteEvents");
 			}
-			String sql = String.format("INSERT IGNORE INTO favorites (user_id, event_id) VALUES (\"%s\", ?)", userId);
+			String sql = String.format("INSERT IGNORE INTO favorites (user_id, event_id) VALUES (\"%s\", ?);", userId);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			for(String eventId : eventIds) {
 				stmt.setString(1, eventId);
@@ -63,10 +63,11 @@ public class MySQLConnection implements DBConnection {
 				throw new SQLException("No existing connection for unsetFavoriteEvents");
 			}
 
-			String sql = String.format("DELETE FROM favorites WHERE user_id = %s AND event_id = ? ", userId);
+			String sql = String.format("DELETE FROM favorites WHERE user_id = '%s' AND event_id = ? ;", userId);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			for (String eventId : eventIds) {
 				stmt.setString(1, eventId);
+				System.out.println(stmt.toString());
 				stmt.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -82,7 +83,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			String sql = String.format("SELECT event_id FROM favorites WHERE user_id = '%s'", userId);
+			String sql = String.format("SELECT event_id FROM favorites WHERE user_id = '%s';", userId);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			while (result.next()) {
@@ -103,7 +104,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM events WHERE event_id = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM events WHERE event_id = ?;");
 			Event.Builder builder = new Event.Builder();
 			for (String eventId : eventIds) {
 				stmt.setString(1, eventId);
@@ -137,7 +138,7 @@ public class MySQLConnection implements DBConnection {
 							+ "(event_id, name, address, event_url, image_url) "
 							+ "VALUES (?, ?, ?, ?, ?)");
 			PreparedStatement stmt2 = conn.prepareStatement(
-					"INSERT IGNORE INTO categories (event_id, category) VALUES (?, ?)");
+					"INSERT IGNORE INTO categories (event_id, category) VALUES (?, ?);");
 			for (Event event : events) {
 				stmt1.setString(1, event.getEventId());
 				stmt1.setString(2, event.getName());
@@ -164,7 +165,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			String sql = String.format("SELECT category FROM categories WHERE event_id = '%s'", eventId);
+			String sql = String.format("SELECT category FROM categories WHERE event_id = '%s';", eventId);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			while (result.next()) {
@@ -183,7 +184,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			String sql = String.format("SELECT * FROM users WHERE user_id = '%s' AND password = '%s'", userId, password);
+			String sql = String.format("SELECT * FROM users WHERE user_id = '%s' AND password = '%s';", userId, password);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			return result.next();
@@ -201,7 +202,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for getFavoriteEventIds");
 			}
-			String sql = String.format("SELECT first_name, last_name FROM users WHERE user_id = '%s'", userId);
+			String sql = String.format("SELECT first_name, last_name FROM users WHERE user_id = '%s';", userId);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			if (result.next()) {
@@ -220,7 +221,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for isUserExist");
 			}
-			String sql = String.format("SELECT user_id FROM users WHERE user_id = '%s'", userId);
+			String sql = String.format("SELECT user_id FROM users WHERE user_id = '%s';", userId);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			return result.next();
@@ -237,7 +238,7 @@ public class MySQLConnection implements DBConnection {
 				System.err.println("MySql connection status is" + conn);
 				throw new SQLException("No existing connection for createUser");
 			}
-			String sql = String.format("INSERT IGNORE INTO users VALUES('%s', '%s', 'new-user', 'new-user')", userId, password);
+			String sql = String.format("INSERT IGNORE INTO users VALUES('%s', '%s', 'new-user', 'new-user');", userId, password);
 			Statement stmt = conn.createStatement();
 			return stmt.executeUpdate(sql) == 1;
 		} catch (SQLException e) {
